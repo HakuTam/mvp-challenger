@@ -190,10 +190,10 @@ h1.title {
 }
 
 .flldr{            
-  --flldr-size: 250px;         /* tamanho da pasta */
-  --flldr-folder: #f2c14e;     /* cor principal da pasta */
-  --flldr-folder-dark:#d6a43c; /* sombra da pasta */
-  --flldr-accent:#4fd1ff;      /* cor da barra */
+  --flldr-size: 250px;         
+  --flldr-folder: #f2c14e;     
+  --flldr-folder-dark:#d6a43c; 
+  --flldr-accent:#4fd1ff;      
   display:inline-block;
 }
 
@@ -226,7 +226,7 @@ h1.title {
   animation: flldr-bar 1.8s ease-in-out infinite alternate;
 }
 
-/* animação da barra */
+
 @keyframes flldr-bar{
   0%   { width: 0% }
   60%  { width: 80% }
