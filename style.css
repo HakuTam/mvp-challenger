@@ -312,3 +312,7 @@ h1.title {
         opacity: 1;
     }
 }
+
+.disable {
+    display: none;
+}
