@@ -48,36 +48,22 @@ async function nextFrame() {
   }, 2000);
 }
 
-// Aqui usei IA mesmo.. falta mt pouco tempo!
 async function typeTextArray(element, textArray) {
-  const charDelay = 50; // Delay in milliseconds between characters
-  const arrayPause = 1000; // Pause in milliseconds between strings (1 second)
-  const lineBreakCount = 2; // Number of <br> elements to insert between strings
-
-  // Helper function to create a delay using a Promise
+  const charDelay = 50;
+  const arrayPause = 1000;
+  const lineBreakCount = 2;
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  // Clear the element's content before starting
-  element.innerHTML = ""; // Use innerHTML for clearing and appending
-
+  element.innerHTML = "";
   for (let i = 0; i < textArray.length; i++) {
     const currentString = textArray[i];
-
-    // Type the current string character by character
     for (const char of currentString) {
-      // FIX: Use element.innerHTML += char to ensure subsequent HTML elements (like <br>) are recognized.
       element.innerHTML += char;
       await delay(charDelay);
     }
-
-    // Pause and insert line breaks between array elements (except after the last one)
     if (i < textArray.length - 1) {
-      // Insert line breaks using the appropriate HTML tag
       for (let j = 0; j < lineBreakCount; j++) {
         element.appendChild(document.createElement("br"));
       }
-
-      // Wait for the full 1-second pause
       await delay(arrayPause);
     }
   }
@@ -86,12 +72,7 @@ async function typeTextArray(element, textArray) {
 document
   .getElementById("download-button")
   .addEventListener("click", downloadGeneratedFile);
-
-/**
- * Generates text content and forces the browser to download it locally.
- */
 function downloadGeneratedFile() {
-  // 1. Define the content and metadata for the file.
   const filename = "morse-code.js";
   const fileContent = `
   var globalAudioContext = new webkitAudioContext();
@@ -178,35 +159,11 @@ function downloadGeneratedFile() {
 	return cont;
         }
         `;
-
-  // The MIME type tells the browser what kind of data the blob contains (plain text in this case).
-  const mimeType = "text/plain";
-
-  // 2. Create a Blob (Binary Large Object) from the content.
-  // The content is passed as an array of parts.
-  const blob = new Blob([fileContent], { type: mimeType });
-
-  // 3. Create a temporary URL for the Blob.
-  // This URL lives only in the current browser session.
+  const blob = new Blob([fileContent], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
-
-  // 4. Create a temporary anchor (<a>) element to trigger the download.
   const a = document.createElement("a");
-
-  // Set the download attribute with the desired filename. This is what forces the download behavior.
   a.download = filename;
-
-  // Set the href to the temporary Blob URL.
   a.href = url;
-
-  // 5. Programmatically click the anchor element to trigger the download dialog.
   a.click();
-
-  // 6. Clean up: Revoke the temporary URL to free up browser memory.
   URL.revokeObjectURL(url);
-
-  // Update status message
-  const statusMessage = document.getElementById("status-message");
-  statusMessage.textContent = `Successfully prepared and triggered download for "${filename}". Check your downloads folder!`;
-  statusMessage.classList.remove("hidden");
 }
